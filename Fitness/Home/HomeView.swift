@@ -6,154 +6,126 @@
 //
 
 import SwiftUI
-internal import Combine
-
-
-
-
+import Combine
 
 struct HomeView: View {
     
-    @State var calories: Int = 123
+    @State var calories: Int = 0
+    
+    
     @State var active: Int = 123
     @State var stand: Int = 8
     
-   
-     
-    
-    
     var body: some View {
         NavigationStack {
-            ScrollView(showsIndicators: false){
-                VStack{
+            ScrollView(showsIndicators: false) {
+                VStack {
                     Text("Welcome")
                         .font(.largeTitle)
                         .padding()
                     
-                    HStack{
+                    HStack {
                         Spacer()
                         
-                        VStack(alignment:  .leading){
-                            VStack(alignment: .leading, spacing: 8){
+                        VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: 8) {
                                 Text("Calories")
                                     .font(.callout)
                                     .bold()
                                     .foregroundColor(.blue)
-                                
-                                Text("\(viewModel.calories)")
+                                Text("\(calories)")
                                     .bold()
-                                
                             }
                             .padding(.bottom)
-                            VStack(alignment: .leading, spacing: 8){
+                            
+                            VStack(alignment: .leading, spacing: 8) {
                                 Text("Active")
                                     .font(.callout)
                                     .bold()
-                                    .foregroundColor(.blue)
-                                
-                                Text("\(viewModel.active)")
+                                    .foregroundColor(.red) // 👈 fixed color
+                                Text("\(active)")
                                     .bold()
-                                
                             }
                             .padding(.bottom)
-                            VStack(alignment: .leading, spacing: 8){
-                                Text("\(viewModel.Stand)")
+                            
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Stand")
                                     .font(.callout)
                                     .bold()
-                                    .foregroundColor(.blue)
-                                
-                                Text("8 hours")
+                                    .foregroundColor(.green) // 👈 fixed color
+                                Text("\(stand)")
                                     .bold()
-                                
                             }
                         }
+                        
                         Spacer()
                         
-                        ZStack{
-                            ProgressCircleView(progress: viewModel.calories, goal: 600, color: .blue)
-                            
-                            ProgressCircleView(progress: viewModel.active, goal: 60, color: .red)
-                                .padding(.all,20)
-                            
-                            ProgressCircleView(progress: viewModel.stand, goal: 12, color: .blue)
-                                .padding(.all,40)
-                            
+                        ZStack {
+                            // 👇 fixed: $calories not .calories
+                            ProgressCircleView(progress: $calories, goal: 600, color: .blue)
+                            ProgressCircleView(progress: $active, goal: 60, color: .red)
+                                .padding(.all, 20)
+                            ProgressCircleView(progress: $stand, goal: 12, color: .green)
+                                .padding(.all, 40)
                         }
                         .padding(.horizontal)
                         
                         Spacer()
-                        
-                        
-                        
                     }
                     .padding()
-                    HStack{
+                    
+                    HStack {
                         Text("Fitness Activity")
                             .font(.title2)
-                        
                         Spacer()
                         Button {
                             print("show more")
-                            
-                        }label: {
+                        } label: {
                             Text("Show more")
                                 .padding(.all, 10)
                                 .foregroundColor(.white)
                                 .background(Color.blue)
                                 .cornerRadius(20)
-                            
-                            
                         }
                     }
                     .padding(.horizontal)
                     
-                    LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count:  2)){
-                        
-                        ForEach(viewModel.mockActivites, id: \.id){
-                            activity in ActivityCard(activity:  activity)
+                    LazyVGrid(columns: Array(repeating: GridItem(spacing: 20), count: 2)) {
+                        // 👇 fixed: viewModel.mockActivities not .viewModel.mockActivites
+                        ForEach(viewModel.mockActivities, id: \<#Root#>.id) { activity in
+                            ActivityCard(activity: activity)
                         }
-                        
-                        
                     }
+                    .padding(.horizontal)
                     
-                }.padding(.horizontal)
-                HStack{
-                    Text("Recent Workout")
-                        .font(.title2)
-                    
-                    Spacer()
-                    NavigationLink{
-                        EmptyView()
-                    }label: {
-                        Text("Show more")
-                            .padding(.all, 10)
-                            .foregroundColor(.white)
-                            .background(Color.blue)
-                            .cornerRadius(20)
-                        
-                        
+                    HStack {
+                        Text("Recent Workout")
+                            .font(.title2)
+                        Spacer()
+                        NavigationLink {
+                            EmptyView()
+                        } label: {
+                            Text("Show more")
+                                .padding(.all, 10)
+                                .foregroundColor(.white)
+                                .background(Color.blue)
+                                .cornerRadius(20)
+                        }
                     }
+                    .padding(.horizontal)
+                    .padding(.top)
                     
-                    
-                    
+                    LazyVStack {
+                        // 👇 fixed: viewModel.mockWorkouts not .mockWorkouts
+                        ForEach(viewModel.mockWorkouts, id: \.id) { workout in
+                            WorkoutCard(workout: workout)
+                        }
+                    }
+                    .padding(.bottom)
                 }
             }
-            .padding(.horizontal)
-            .padding(.top)
-            
-            LazyVStack {
-                
-                ForEach(viewModel.mockWorkouts, id: \.id){
-                    workout in WorkoutCard(workout: workout)
-                }
-                
-            }
-            .padding(.bottom)
-            
         }
     }
-                
-            
 }
 
 struct HomeView_Previews: PreviewProvider {
@@ -161,9 +133,3 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
     }
 }
-    
-    
-
-
-
-

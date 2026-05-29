@@ -5,10 +5,9 @@
 //  Created by Nadine Agbortarh on 29/05/2026.
 //
 
+ import SwiftUI
 
-import SwiftUI
-
-struct Activity {
+struct Activity: Identifiable {
     let id: Int
     let title: String
     let subtitle: String
