@@ -9,6 +9,9 @@ import SwiftUI
 import Combine
 
 class HomeViewModel: ObservableObject {
+    
+    let healthManger: HealthManager.shared
+    
     @Published var calories: Int = 0
     @Published var steps: Int = 0
     @Published var activities: [Activity] = []
