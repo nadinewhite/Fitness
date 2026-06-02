@@ -32,5 +32,10 @@ class HealthManager{
         }
         
     }
+    func fetchTodayCaloriesBurned(completion: @escaping(Result<Double, Error>)  -> void) {
+        
+        let calories = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
+        let query = HKStat
+    }
     
 }
