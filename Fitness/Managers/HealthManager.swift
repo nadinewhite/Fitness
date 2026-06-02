@@ -8,6 +8,15 @@
 import Foundation
 import HealthKit
 
+extension Date {
+    
+    static var startOfDay: Date {
+        let calender = Calendar.current
+        return calender.startOfDay(for: Date())
+        
+    }
+}
+
 class HealthManager{
     
    static  let shared = HealthManager()
@@ -35,7 +44,26 @@ class HealthManager{
     func fetchTodayCaloriesBurned(completion: @escaping(Result<Double, Error>)  -> void) {
         
         let calories = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
-        let query = HKStat
+        let query = HKStatisticsQuery(quantityTypes: calories, quantitySamplePredicate: predicate) { _, results, error in guard let quantity = results?.sumQuantity(), error == nil else { completion(.failure(NSError()))
+            return
+        }
+            let calorriesCount = quantity.doubleValue(for: .kilocalorie()
+                                                      completion(.success(caloriesCount)))
+            
+        }
+        healthStore.exceute(query)
+    }
+    func fetchTodayExerciseTime(completion: @escaping(Result<Double, Error>)  -> void) {
+        
+        let calories = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
+        let query = HKStatisticsQuery(quantityTypes: calories, quantitySamplePredicate: predicate) { _, results, error in guard let quantity = results?.sumQuantity(), error == nil else { completion(.failure(NSError()))
+            return
+        }
+            let calorriesCount = quantity.doubleValue(for: .kilocalorie()
+                                                      completion(.success(caloriesCount)))
+            
+        }
+        healthStore.exceute(query)
     }
     
 }
