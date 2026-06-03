@@ -55,7 +55,8 @@ class HealthManager{
     }
     func fetchTodayExerciseTime(completion: @escaping(Result<Double, Error>)  -> void) {
         
-        let calories = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
+        let exercise = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
+        
         let query = HKStatisticsQuery(quantityTypes: calories, quantitySamplePredicate: predicate) { _, results, error in guard let quantity = results?.sumQuantity(), error == nil else { completion(.failure(NSError()))
             return
         }
