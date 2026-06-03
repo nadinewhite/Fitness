@@ -12,8 +12,9 @@ class HomeViewModel: ObservableObject {
     
     let healthManger = HealthManager.shared
     
-    @Published var calories: Int = 0
-    @Published var steps: Int = 0
+    @Published var calories: Int = 123
+    @Published var steps: Int = 52
+    @Published var stand: Int = 8
     @Published var activities: [Activity] = []
 
     var mockActivities = [
@@ -29,4 +30,23 @@ class HomeViewModel: ObservableObject {
         Workout(id: 2, title: "Walk",             Image: "figure.run", tintColor: .cyan, date: "Aug 23, 2021", calories: "500", duration: "51 mins"),
         Workout(id: 3, title: "Running",          Image: "figure.run", tintColor: .cyan, date: "Aug 23, 2021", calories: "500", duration: "51 mins"),
     ]
+    
+    init() {
+        
+        
+        healthManger.fetchTodayCaloriesBurned  { result in
+            switch result {
+            case.success(let success):
+                print(success)
+            case.failure(let failure):
+                print(failure.localizedDescription)
+            }}
+        healthManger.fetchTodayStandHours{ result  in
+            switch result {
+            case.success(let success):
+                print(success)
+            case.failure(let failure):
+                print(failure.localizedDescription)
+            }}
+    }
 }
