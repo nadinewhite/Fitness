@@ -41,30 +41,46 @@ class HealthManager{
         }
         
     }
-    func fetchTodayCaloriesBurned(completion: @escaping(Result<Double, Error>)  -> void) {
+    func fetchTodayCaloriesBurned(completion: @escaping(Result<Double, Error>)  -> Void) {
         
         let calories = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
-        let query = HKStatisticsQuery(quantityTypes: calories, quantitySamplePredicate: predicate) { _, results, error in guard let quantity = results?.sumQuantity(), error == nil else { completion(.failure(NSError()))
+        let query = HKStatisticsQuery(quantityType: calories, quantitySamplePredicate: predicate) { _, results, error in guard let quantity = results?.sumQuantity(), error == nil else { completion(.failure(NSError()))
             return
         }
-            let calorriesCount = quantity.doubleValue(for: .kilocalorie()
+            let calorriesCount = quantity.doubleValue(for: .kilocalorie(),
                                                       completion(.success(caloriesCount)))
             
         }
-        healthStore.exceute(query)
+        healthStore.execute(query)
     }
-    func fetchTodayExerciseTime(completion: @escaping(Result<Double, Error>)  -> void) {
+    func fetchTodayExerciseTime(completion: @escaping(Result<Double, Error>)  -> Void) {
         
         let exercise = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
         
-        let query = HKStatisticsQuery(quantityTypes: calories, quantitySamplePredicate: predicate) { _, results, error in guard let quantity = results?.sumQuantity(), error == nil else { completion(.failure(NSError()))
+        let query = HKStatisticsQuery(quantityType: exercise, quantitySamplePredicate: predicate) { _, results, error in guard let quantity = results?.sumQuantity(), error == nil else { completion(.failure(NSError()))
             return
         }
-            let calorriesCount = quantity.doubleValue(for: .kilocalorie()
-                                                      completion(.success(caloriesCount)))
+            let exerciseTime  = quantity.doubleValue(for: .minute())
+                                                      completion(.success(exerciseTime))
             
         }
-        healthStore.exceute(query)
+        healthStore.execute(query)
+    }
+    func fetchTodayStandHours(completion: @escaping(Result<Double, Error>)  -> Void) {
+        
+        let stand = HKCategoryType(.appleStandHour)
+        let predicate = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
+        
+        let query = HKSampleQuery(sampleType: stand, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, error in guard let samples = results  as? [HKQuantitySample ], error == nil else { completion(.failure(NSError()))
+            return
+        }
+           print(samples)
+            print(samples.map({ $0.quantity}))
+            
+            completion(.success(2.0))
+            
+        }
+        healthStore.execute(query)
     }
     
 }
