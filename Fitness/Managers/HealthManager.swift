@@ -41,6 +41,17 @@ class HealthManager{
         }
         
     }
+    
+    func requestHealthKitAccess()
+    async throws{
+        let calories = HKQuantityType(.activeEnergyBurned)
+        let exercise  = HKQuantityType(.appleExerciseTime)
+        let stand = HKCategoryType(.appleStandHour)
+        
+        let healthTypes: Set = [calories, exercise, stand]
+      
+    }
+
     func fetchTodayCaloriesBurned(completion: @escaping(Result<Double, Error>)  -> Void) {
         
         let calories = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
