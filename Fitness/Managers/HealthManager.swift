@@ -29,11 +29,12 @@ class HealthManager{
         let exercise  = HKQuantityType(.appleExerciseTime)
         let stand = HKCategoryType(.appleStandHour)
         
-        let healthTypes: Set = [calories, exercise, stand]
+        let _: Set = [calories, exercise, stand]
+       
         
         Task {
             do {
-                try await healthStore.requestAuthorization(toShare: [], read: [] )
+                try await requestHealthKitAccess()
             } catch{
                 
                 print(error.localizedDescription)
@@ -48,7 +49,7 @@ class HealthManager{
         let exercise  = HKQuantityType(.appleExerciseTime)
         let stand = HKCategoryType(.appleStandHour)
         
-        let healthTypes: Set = [calories, exercise, stand]
+        let _: Set = [calories, exercise, stand]
       
     }
 

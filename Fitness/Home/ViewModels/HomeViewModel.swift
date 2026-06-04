@@ -32,6 +32,13 @@ class HomeViewModel: ObservableObject {
     ]
     
     init() {
+        Task {
+            do {
+                try await HealthManager.requestHealthKitAccess()
+            }catch{
+                print(error.localizedDescription)
+            }
+        }
         
         
         healthManger.fetchTodayCaloriesBurned  { result in
