@@ -35,25 +35,26 @@ class HomeViewModel: ObservableObject {
         Task {
             do {
                 try await HealthManager.requestHealthKitAccess()
+                healthManger.fetchTodayCaloriesBurned  { result in
+                    switch result {
+                    case.success(let success):
+                        print(success)
+                    case.failure(let failure):
+                        print(failure.localizedDescription)
+                    }}
+                healthManger.fetchTodayStandHours{ result  in
+                    switch result {
+                    case.success(let success):
+                        print(success)
+                    case.failure(let failure):
+                        print(failure.localizedDescription)
+                    }}
             }catch{
                 print(error.localizedDescription)
             }
         }
         
         
-        healthManger.fetchTodayCaloriesBurned  { result in
-            switch result {
-            case.success(let success):
-                print(success)
-            case.failure(let failure):
-                print(failure.localizedDescription)
-            }}
-        healthManger.fetchTodayStandHours{ result  in
-            switch result {
-            case.success(let success):
-                print(success)
-            case.failure(let failure):
-                print(failure.localizedDescription)
-            }}
+        
     }
 }

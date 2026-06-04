@@ -88,8 +88,8 @@ class HealthManager{
         }
            print(samples)
             print(samples.map({ $0.quantity}))
-            
-            completion(.success(2.0))
+            let standCount = samples.filter({ $0.value == 0}).count
+            completion(.success(standCount))
             
         }
         healthStore.execute(query)
