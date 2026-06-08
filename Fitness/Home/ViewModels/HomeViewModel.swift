@@ -35,7 +35,9 @@ class HomeViewModel: ObservableObject {
         Task {
             do {
                 try await HealthManager.requestHealthKitAccess()
-                
+                fetchTodayCalories()
+                fetchTodayExerciseTime()
+                fetchTodayStandHours()
                 
             }catch{
                 print(error.localizedDescription)
