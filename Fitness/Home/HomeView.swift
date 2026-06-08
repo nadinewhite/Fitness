@@ -33,7 +33,7 @@ struct HomeView: View {
                                     .font(.callout)
                                     .bold()
                                     .foregroundColor(.blue)
-                                Text("\(calories)")
+                                Text("\(viewModel.calories)")
                                     .bold()
                             }
                             .padding(.bottom)
@@ -43,7 +43,7 @@ struct HomeView: View {
                                     .font(.callout)
                                     .bold()
                                     .foregroundColor(.red) // 👈 fixed color
-                                Text("\(active)")
+                                Text("\(viewModel.active)")
                                     .bold()
                             }
                             .padding(.bottom)
@@ -53,7 +53,7 @@ struct HomeView: View {
                                     .font(.callout)
                                     .bold()
                                     .foregroundColor(.green) // 👈 fixed color
-                                Text("\(stand)")
+                                Text("\(viewModel.stand)")
                                     .bold()
                             }
                         }

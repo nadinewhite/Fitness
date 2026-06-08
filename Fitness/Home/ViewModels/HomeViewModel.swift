@@ -12,9 +12,9 @@ class HomeViewModel: ObservableObject {
     
     let healthManger = HealthManager.shared
     
-    @Published var calories: String = "0"
-    @Published var exercise: String = "0"
-    @Published var stand: String = "0"
+    @Published var calories: Int = 0
+    @Published var exercise: Int = 0
+    @Published var stand: Int = 0
     @Published var activities: [Activity] = []
 
     var mockActivities = [
@@ -50,7 +50,7 @@ class HomeViewModel: ObservableObject {
             switch result {
             case.success(let calories):
                 DispatchQueue.main.async {
-                    self.calories = "\(calories)"
+                    self.calories = Int (calories)
             case.failure(let failure):
                 print(failure.localizedDescription)
             }}
@@ -61,7 +61,7 @@ class HomeViewModel: ObservableObject {
             result in switch result {
             case.success(let exercise):
                 DispatchQueue.main.async {
-                    self.exercise= "\(exercise)"
+                    self.exercise= Int (exercise)
             case.failure(let failure):
                 print(failure.localizedDescription)
                 
@@ -74,7 +74,7 @@ class HomeViewModel: ObservableObject {
             switch result {
             case.success(let stand):
                 DispatchQueue.main.async {
-                    self.stand = "\(hours)"
+                    self.stand = Int (hours)
                 }
             case.failure(let failure):
                 print(failure.localizedDescription)
