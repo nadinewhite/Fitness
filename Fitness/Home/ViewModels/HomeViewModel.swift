@@ -12,9 +12,9 @@ class HomeViewModel: ObservableObject {
     
     let healthManger = HealthManager.shared
     
-    @Published var calories: Int = 123
-    @Published var exercise: Int = 52
-    @Published var stand: Int = 8
+    @Published var calories: String = "0"
+    @Published var exercise: String = "0"
+    @Published var stand: String = "0"
     @Published var activities: [Activity] = []
 
     var mockActivities = [
@@ -35,13 +35,7 @@ class HomeViewModel: ObservableObject {
         Task {
             do {
                 try await HealthManager.requestHealthKitAccess()
-                healthManger.fetchTodayCaloriesBurned  { result in
-                    switch result {
-                    case.success(let success):
-                        print(success)
-                    case.failure(let failure):
-                        print(failure.localizedDescription)
-                    }}
+                
                 
             }catch{
                 print(error.localizedDescription)
@@ -51,16 +45,36 @@ class HomeViewModel: ObservableObject {
         
         
     }
-    func fetchTodayCalories(){}
+    func fetchTodayCalories(){
+        healthManger.fetchTodayCaloriesBurned  { result in
+            switch result {
+            case.success(let calories):
+                DispatchQueue.main.async {
+                    self.calories = "\(calories)"
+            case.failure(let failure):
+                print(failure.localizedDescription)
+            }}
+    }
     
-    func fetchTodayExerciseTime(){}
+    func fetchTodayExerciseTime(){
+        healthManger.fetchTodayExerciseTime {
+            result in switch result {
+            case.success(let exercise):
+                DispatchQueue.main.async {
+                    self.exercise= "\(exercise)"
+            case.failure(let failure):
+                print(failure.localizedDescription)
+                
+            }
+        }
+    }
     
     func fetchTodayStandHour(){
         healthManger.fetchTodayStandHours{ result  in
             switch result {
-            case.success(let success):
+            case.success(let stand):
                 DispatchQueue.main.async {
-                    self.stand = hours
+                    self.stand = "\(hours)"
                 }
             case.failure(let failure):
                 print(failure.localizedDescription)
