@@ -19,7 +19,7 @@ extension Date {
 
 class HealthManager{
     
-   static  let shared = HealthManager()
+    static  let shared = HealthManager()
     
     let healthStore = HKHealthStore()
     
@@ -30,7 +30,7 @@ class HealthManager{
         let stand = HKCategoryType(.appleStandHour)
         
         let _: Set = [calories, exercise, stand]
-       
+        
         
         Task {
             do {
@@ -52,9 +52,9 @@ class HealthManager{
         
         let _: Set = [calories, exercise, stand]
         try await healthStore.requestAuthorization(toShare: [], read: healthTypes)
-      
+        
     }
-
+    
     func fetchTodayCaloriesBurned(completion: @escaping(Result<Double, Error>)  -> Void) {
         
         let calories = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
@@ -75,7 +75,7 @@ class HealthManager{
             return
         }
             let exerciseTime  = quantity.doubleValue(for: .minute())
-                                                      completion(.success(exerciseTime))
+            completion(.success(exerciseTime))
             
         }
         healthStore.execute(query)
@@ -88,7 +88,7 @@ class HealthManager{
         let query = HKSampleQuery(sampleType: stand, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, error in guard let samples = results  as? [HKQuantitySample ], error == nil else { completion(.failure(NSError()))
             return
         }
-           print(samples)
+            print(samples)
             print(samples.map({ $0.quantity}))
             let standCount = samples.filter({ $0.value == 0}).count
             completion(.success(standCount))
@@ -98,5 +98,17 @@ class HealthManager{
     }
     func fetchTodaySteps(completion: @escaping(Result<Activity, Error -> void) {
         
+        
+        let stand = HKCategoryType(.appleStandHour)
+        let predicate = HKQuery.predicateForSamples(withStart: .startOfDay, end: Date())
+        
+        let query = HKSampleQuery(sampleType: stand, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, error in guard let samples = results  as? [HKQuantitySample ], error == nil else { completion(.failure(NSError()))
+            return
+            
+        }
+            let steps = quantity.doubleValue(for: .count())
+            
+            completion(.success(steps))
+        }
     }
 }
