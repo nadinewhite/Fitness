@@ -96,5 +96,7 @@ class HealthManager{
         }
         healthStore.execute(query)
     }
-    func fetchTodaySteps(completion: @escaping(Result<Activity, Error>) {}
+    func fetchTodaySteps(completion: @escaping(Result<Activity, Error -> void) {
+        
+    }
 }
