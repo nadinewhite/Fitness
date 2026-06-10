@@ -30,6 +30,8 @@ class HealthManager{
         let stand = HKCategoryType(.appleStandHour)
         
         let _: Set = [calories, exercise, stand]
+         
+        
         
         
         Task {
@@ -107,8 +109,9 @@ class HealthManager{
             
         }
             let steps = quantity.doubleValue(for: .count())
-            
-            completion(.success(steps))
+            let activtiy = Activity(id: 0, title: "Today Steps", subtitle: "Goals: 800", image: "figure.walk", tintColor: .green, amount: ("\Int(steps)")
+            completion(.success(activity))
         }
+        healthStore.execute(query)
     }
 }
