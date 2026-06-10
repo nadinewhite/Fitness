@@ -76,11 +76,24 @@ class HomeViewModel: ObservableObject {
                     switch result {
                     case.success(let stand):
                         DispatchQueue.main.async {
-                            self.stand = Int (hours)
+                            self.stand = Int(hours)
                         }
                     case.failure(let failure):
                         print(failure.localizedDescription)
                     }}
             }
+            //MARK: Fitness Activity
+            func fetchTodayActivity() {
+                healthManger.fetchTodaySteps {
+                    switch result {
+                    case .success(let steps):
+                        DispatchQueue.main.async {
+                            self.activites.append(activity)
+                        }
+                    case.failure(let failure):
+                        print(failure.localizedDescription)
+                }
+            }
+            
         }
     }
