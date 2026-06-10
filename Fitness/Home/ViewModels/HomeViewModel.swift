@@ -53,33 +53,34 @@ class HomeViewModel: ObservableObject {
             case.success(let calories):
                 DispatchQueue.main.async {
                     self.calories = Int (calories)
-            case.failure(let failure):
-                print(failure.localizedDescription)
-            }}
-    }
-    
-    func fetchTodayExerciseTime(){
-        healthManger.fetchTodayExerciseTime {
-            result in switch result {
-            case.success(let exercise):
-                DispatchQueue.main.async {
-                    self.exercise= Int (exercise)
-            case.failure(let failure):
-                print(failure.localizedDescription)
-                
+                case.failure(let failure):
+                    print(failure.localizedDescription)
+                }}
+        }
+        
+        func fetchTodayExerciseTime(){
+            healthManger.fetchTodayExerciseTime {
+                result in switch result {
+                case.success(let exercise):
+                    DispatchQueue.main.async {
+                        self.exercise= Int (exercise)
+                    case.failure(let failure):
+                        print(failure.localizedDescription)
+                        
+                    }
+                }
+            }
+            
+            func fetchTodayStandHour(){
+                healthManger.fetchTodayStandHours{ result  in
+                    switch result {
+                    case.success(let stand):
+                        DispatchQueue.main.async {
+                            self.stand = Int (hours)
+                        }
+                    case.failure(let failure):
+                        print(failure.localizedDescription)
+                    }}
             }
         }
     }
-    
-    func fetchTodayStandHour(){
-        healthManger.fetchTodayStandHours{ result  in
-            switch result {
-            case.success(let stand):
-                DispatchQueue.main.async {
-                    self.stand = Int (hours)
-                }
-            case.failure(let failure):
-                print(failure.localizedDescription)
-            }}
-    }
-}
