@@ -12,9 +12,18 @@ extension Date {
     
     static var startOfDay: Date {
         let calender = Calendar.current
+        
         return calender.startOfDay(for: Date())
         
     }
+    static var startOfWeek: Date {
+        let calender = calender.current
+        var components = calender.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())
+        components.weekday = 2
+        return calender.date(from: components) ?? Date()
+        
+    }
+    
 }
 
 extension Double {
@@ -127,5 +136,9 @@ class HealthManager{
             completion(.success(activity))
         }
         healthStore.execute(query)
+    }
+    func fetchCurrentWeekoutStates() {
+        let workout = HKSampleType.workoutType()
+        let predicate = HKQuery.predicateForSamples(withStart: .startOfWeek, end:  Date())
     }
 }
