@@ -17,6 +17,20 @@ extension Date {
     }
 }
 
+extension Double {
+    
+    func formattedNumberString() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter.string(from: NSNumber(value: self)) ??  "0"
+        
+        
+    }
+    
+    }
+
+
 class HealthManager{
     
     static  let shared = HealthManager()
