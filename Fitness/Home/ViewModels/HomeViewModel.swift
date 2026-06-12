@@ -34,10 +34,11 @@ class HomeViewModel: ObservableObject {
     init() {
         Task {
             do {
-                try await HealthManager.requestHealthKitAccess()
+                try await healthManager.requestHealthKitAccess()
                 fetchTodayCalories()
                 fetchTodayExerciseTime()
                 fetchTodayStandHours()
+                fetchTodaysteps()
                 
             }catch{
                 print(error.localizedDescription)
