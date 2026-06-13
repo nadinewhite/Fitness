@@ -145,6 +145,18 @@ class HealthManager{
                 completion(.failure(NSError()))
                 return
                 
+            }
+            var runningCount: Int = 0
+            var strengthCount: Int = 0
+            var soccerCount: Int = 0
+            var basketballCount: Int = 0
+            var stairsCount: Int = 0
+            var kickboxingCount: Int = 0
+            
+            for workout in workouts {
+                if workout.workoutActivityType == .running {
+                    
+                }
             }}
     }
 }
