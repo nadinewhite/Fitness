@@ -140,6 +140,11 @@ class HealthManager{
     func fetchCurrentWeekoutStates() {
         let workout = HKSampleType.workoutType()
         let predicate = HKQuery.predicateForSamples(withStart: .startOfWeek, end:  Date())
-        let query = HKSampleQuery(sampleType:)
+        let query = HKSampleQuery(sampleType: workout, predicate: predicate, limit: HKObjectNoLimit, sortDescriptions: nil) { _, results, error in
+            guard let workouts = results as?  [HKWorkout], error == nil else{
+                completion(.failure(NSError()))
+                return
+                
+            }}
     }
 }
