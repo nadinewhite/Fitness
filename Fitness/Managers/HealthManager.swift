@@ -137,7 +137,7 @@ class HealthManager{
         }
         healthStore.execute(query)
     }
-    func fetchCurrentWeekoutStates() {
+    func fetchCurrentWeekoutStates(completion: @escaping(Result<[HKWorkout], Error>)  -> Void) {
         let workout = HKSampleType.workoutType()
         let predicate = HKQuery.predicateForSamples(withStart: .startOfWeek, end:  Date())
         let query = HKSampleQuery(sampleType: workout, predicate: predicate, limit: HKObjectNoLimit, sortDescriptions: nil) { _, results, error in
